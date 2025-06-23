@@ -48,7 +48,7 @@ const Index = () => {
           <div className="flex items-center space-x-3">
             <Waves className="h-8 w-8 text-blue-100" />
             <h1 className="text-3xl font-bold bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">
-              Tide Dashboard
+              Fairfield Beaches Tide Dashboard
             </h1>
           </div>
           <p className="text-blue-100 mt-2 flex items-center space-x-2">

@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from 'react';
-import { MapPin, Clock, Waves } from 'lucide-react';
+import { MapPin, Clock, Waves, Thermometer } from 'lucide-react';
 import TideStatus from '@/components/TideStatus';
 import LocalTime from '@/components/LocalTime';
 import NearbyBeaches from '@/components/NearbyBeaches';
@@ -9,6 +9,7 @@ import LocationPermission from '@/components/LocationPermission';
 const Index = () => {
   const [location, setLocation] = useState<{lat: number, lng: number} | null>(null);
   const [locationError, setLocationError] = useState<string>('');
+  const [temperature, setTemperature] = useState<number>(72);
 
   const requestLocation = () => {
     if (navigator.geolocation) {
@@ -19,16 +20,20 @@ const Index = () => {
             lng: position.coords.longitude
           });
           setLocationError('');
+          // Simulate temperature based on location (mock data)
+          setTemperature(Math.round(65 + Math.random() * 20));
         },
         (error) => {
           setLocationError('Location access denied. Using default location.');
           // Default to Santa Monica, CA
           setLocation({ lat: 34.0195, lng: -118.4912 });
+          setTemperature(72);
         }
       );
     } else {
       setLocationError('Geolocation not supported. Using default location.');
       setLocation({ lat: 34.0195, lng: -118.4912 });
+      setTemperature(72);
     }
   };
 
@@ -60,17 +65,17 @@ const Index = () => {
 
       {/* Main Content */}
       <div className="container mx-auto px-4 py-8 space-y-8">
-        {/* Time and Location Row */}
+        {/* Time and Temperature Row */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <LocalTime location={location} />
           <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/20">
             <div className="flex items-center space-x-3 mb-4">
-              <MapPin className="h-6 w-6 text-blue-600" />
-              <h2 className="text-xl font-semibold text-gray-800">Current Location</h2>
+              <Thermometer className="h-6 w-6 text-blue-600" />
+              <h2 className="text-xl font-semibold text-gray-800">Current Temperature</h2>
             </div>
             <div className="text-gray-600">
-              <p>Latitude: {location.lat.toFixed(4)}</p>
-              <p>Longitude: {location.lng.toFixed(4)}</p>
+              <p className="text-3xl font-bold text-blue-600">{temperature}°F</p>
+              <p className="text-sm text-gray-500 mt-1">Fairfield, CT area</p>
             </div>
           </div>
         </div>

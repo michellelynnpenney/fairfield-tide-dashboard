@@ -13,6 +13,7 @@ interface Beach {
   rating: number;
   features: string[];
   description: string;
+  town: string;
 }
 
 const NearbyBeaches = ({ location }: NearbyBeachesProps) => {
@@ -20,56 +21,61 @@ const NearbyBeaches = ({ location }: NearbyBeachesProps) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Mock beach data - in a real app, you'd fetch from a places API
-    const generateMockBeaches = (): Beach[] => {
-      const mockBeaches = [
+    // Beaches specifically in Fairfield and Southport, Connecticut
+    const generateConnecticutBeaches = (): Beach[] => {
+      const ctBeaches = [
         {
           id: '1',
-          name: 'Sunset Beach',
-          distance: 0.8,
-          rating: 4.5,
-          features: ['Swimming', 'Surfing', 'Parking'],
-          description: 'Beautiful sandy beach perfect for sunset viewing and water sports.'
+          name: 'Jennings Beach',
+          distance: 0.5,
+          rating: 4.3,
+          features: ['Swimming', 'Parking', 'Restrooms'],
+          description: 'Popular town beach in Fairfield with lifeguards and beach facilities.',
+          town: 'Fairfield'
         },
         {
           id: '2',
-          name: 'Crystal Cove',
-          distance: 1.2,
-          rating: 4.8,
-          features: ['Snorkeling', 'Hiking', 'Restaurant'],
-          description: 'Protected marine area with crystal clear waters and diverse marine life.'
+          name: 'Penfield Beach',
+          distance: 0.8,
+          rating: 4.1,
+          features: ['Swimming', 'Picnic Area', 'Playground'],
+          description: 'Family-friendly beach with pavilion and recreational facilities.',
+          town: 'Fairfield'
         },
         {
           id: '3',
-          name: 'Driftwood Bay',
-          distance: 2.1,
-          rating: 4.2,
-          features: ['Fishing', 'Picnic Area', 'Dog Friendly'],
-          description: 'Quiet beach with excellent fishing spots and family-friendly amenities.'
+          name: 'Sasco Beach',
+          distance: 1.2,
+          rating: 4.0,
+          features: ['Swimming', 'Fishing', 'Walking Trails'],
+          description: 'Quiet beach area perfect for fishing and peaceful walks.',
+          town: 'Fairfield'
         },
         {
           id: '4',
-          name: 'Lighthouse Point',
-          distance: 3.5,
-          rating: 4.6,
-          features: ['Lighthouse', 'Photography', 'Tide Pools'],
-          description: 'Historic lighthouse with stunning views and fascinating tide pools to explore.'
+          name: 'Southport Beach',
+          distance: 1.5,
+          rating: 4.4,
+          features: ['Swimming', 'Boating', 'Marina Access'],
+          description: 'Charming beach in historic Southport with harbor views.',
+          town: 'Southport'
         },
         {
           id: '5',
-          name: 'Seashell Shore',
-          distance: 4.2,
-          rating: 4.3,
-          features: ['Shell Collecting', 'Volleyball', 'Boardwalk'],
-          description: 'Popular beach known for its abundance of beautiful seashells and beach volleyball courts.'
+          name: 'Harbor Beach',
+          distance: 1.8,
+          rating: 4.2,
+          features: ['Swimming', 'Harbor Views', 'Restaurant Nearby'],
+          description: 'Scenic beach with beautiful views of Southport Harbor.',
+          town: 'Southport'
         }
       ];
 
-      return mockBeaches.sort((a, b) => a.distance - b.distance);
+      return ctBeaches.sort((a, b) => a.distance - b.distance);
     };
 
     setTimeout(() => {
-      setBeaches(generateMockBeaches());
+      setBeaches(generateConnecticutBeaches());
       setLoading(false);
     }, 1000);
   }, [location]);
@@ -90,7 +96,7 @@ const NearbyBeaches = ({ location }: NearbyBeachesProps) => {
       <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/20">
         <div className="flex items-center space-x-3 mb-6">
           <MapPin className="h-6 w-6 text-blue-600" />
-          <h2 className="text-xl font-semibold text-gray-800">Nearby Beaches</h2>
+          <h2 className="text-xl font-semibold text-gray-800">Beaches in Fairfield & Southport, CT</h2>
         </div>
         <div className="space-y-4">
           {[1, 2, 3].map((i) => (
@@ -109,14 +115,17 @@ const NearbyBeaches = ({ location }: NearbyBeachesProps) => {
         <div className="p-2 bg-teal-100 rounded-full">
           <MapPin className="h-6 w-6 text-teal-600" />
         </div>
-        <h2 className="text-xl font-semibold text-gray-800">Nearby Beaches</h2>
+        <h2 className="text-xl font-semibold text-gray-800">Beaches in Fairfield & Southport, CT</h2>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {beaches.map((beach) => (
           <div key={beach.id} className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-xl p-4 border border-blue-100 hover:shadow-md transition-shadow">
             <div className="flex items-start justify-between mb-3">
-              <h3 className="font-semibold text-gray-900 text-lg">{beach.name}</h3>
+              <div>
+                <h3 className="font-semibold text-gray-900 text-lg">{beach.name}</h3>
+                <p className="text-sm text-blue-600 font-medium">{beach.town}, CT</p>
+              </div>
               <div className="flex items-center space-x-1">
                 <Navigation className="h-4 w-4 text-blue-600" />
                 <span className="text-sm text-blue-600 font-medium">{beach.distance} mi</span>

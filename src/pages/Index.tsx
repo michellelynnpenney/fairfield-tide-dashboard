@@ -4,6 +4,7 @@ import { MapPin, Clock, Waves, Thermometer } from 'lucide-react';
 import TideStatus from '@/components/TideStatus';
 import LocalTime from '@/components/LocalTime';
 import NearbyBeaches from '@/components/NearbyBeaches';
+import BestSwimTime from '@/components/BestSwimTime';
 import LocationPermission from '@/components/LocationPermission';
 
 const Index = () => {
@@ -82,6 +83,9 @@ const Index = () => {
 
         {/* Tide Status */}
         <TideStatus location={location} />
+
+        {/* Best Swimming Times */}
+        <BestSwimTime location={location} temperature={temperature} />
 
         {/* Nearby Beaches */}
         <NearbyBeaches location={location} />
